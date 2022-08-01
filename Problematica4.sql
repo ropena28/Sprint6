@@ -28,3 +28,12 @@ SELECT employees.branch_name,quantity_employes*1.0/quantity_clients FROM
     WHERE employees.branch_name = clients.branch_name
 ;
 
+-- Obtener la cantidad de tarjetas de crédito por tipo por sucursal
+
+SELECT COUNT(tarjeta.Numero) as cantidad, Tipo_tarjeta.Tipo, sucursal.branch_name, Marcas_Tarjeta.MT_nombre
+from tarjeta inner join Tipo_tarjeta on tarjeta.fk_Tipo = Tipo_tarjeta.Tipo_tarjeta_id
+inner join Marcas_Tarjeta on tarjeta.fk_Marca = Marcas_Tarjeta.MT_id
+inner join cliente on cliente.customer_id = tarjeta.fk_cliente
+inner join sucursal on sucursal.branch_id = cliente.branch_id
+where Tipo_tarjeta.Tipo = "CREDITO"
+group by sucursal.branch_id
