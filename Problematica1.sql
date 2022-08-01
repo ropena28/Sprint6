@@ -48,3 +48,11 @@ INSERT INTO Marcas_Tarjeta (MT_nombre) VALUES('ITBANK PLATINUM');
 INSERT INTO Tipo_tarjeta(Tipo) VALUES('CREDITO');
 INSERT INTO Tipo_tarjeta(Tipo) VALUES('DEBITO');
 
+CREATE TABLE direcciones(
+    direccion_id Integer PRIMARY KEY,
+    calle text not null,
+    numero text not null,
+    ciudad text not null,
+    provincia text not null,
+    pais text not null,
+);
