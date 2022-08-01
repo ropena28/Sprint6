@@ -38,29 +38,29 @@ SELECT count(customer_DNI)
 FROM cliente
 WHERE dob < '1972';
 
--- Seleccionar de la tabla de préstamos, 
--- los préstamos con un importe mayor a $80.000 y
---  los préstamos prendarios utilizando la unión 
--- de tablas/consultas (recordar que en las bases
--- de datos la moneda se guarda como integer, en 
--- este caso con 2 centavos)
+-- Seleccionar de la tabla de préstamos,importe mayor a $80.000 
 
-SELECT loan_total*1.0/100 as loan,loan_type from prestamo 
+SELECT loan_total*1.0/100 as loan,loan_type 
+FROM prestamo 
 WHERE loan >80000 
 UNION
-SELECT loan_total*1.0/100 as loan,loan_type FROM prestamo WHERE loan_type = 'PRENDARIO'
+SELECT loan_total*1.0/100 as loan,loan_type 
+FROM prestamo 
+WHERE loan_type = 'PRENDARIO'
 ORDER BY loan ASC
 ;
 
 -- Seleccionar los prestamos cuyo importe sea mayor que el importe medio de todos los prestamos
 -- SELECT avg(loan_total*1.0/100) FROM prestamo; importe medio?
 
-SELECT loan_total*1.0/100 as loan,* FROM prestamo
+SELECT loan_total*1.0/100 as loan,* 
+FROM prestamo
 WHERE loan > (SELECT avg(loan_total*1.0/100) FROM prestamo)
 ORDER BY loan ASC
 ;
 
 -- Obtener el importe total de los prestamos agrupados por tipo de préstamos
-SELECT sum(loan_total)*1.0/100 as loan_total_accu,loan_type FROM prestamo
+SELECT sum(loan_total)*1.0/100 as loan_total_accu,loan_type 
+FROM prestamo
 GROUP by loan_type
 ;

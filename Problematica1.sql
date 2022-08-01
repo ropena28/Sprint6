@@ -42,13 +42,18 @@ CREATE TABLE tarjeta(
 
 
 -- Generate Marcas tarjetas
-INSERT INTO Marcas_Tarjeta (MT_nombre) VALUES('ITBANK CLASSIC');
-INSERT INTO Marcas_Tarjeta (MT_nombre) VALUES('ITBANK GOLD');
-INSERT INTO Marcas_Tarjeta (MT_nombre) VALUES('ITBANK PLATINUM');
+INSERT INTO Marcas_Tarjeta (MT_nombre) 
+    VALUES
+        ('ITBANK CLASSIC')
+        ('ITBANK GOLD'),
+        ('ITBANK PLATINUM')
+;
 -- Generate Tipos tarjetas 
-INSERT INTO Tipo_tarjeta(Tipo) VALUES('CREDITO');
-INSERT INTO Tipo_tarjeta(Tipo) VALUES('DEBITO');
-
+INSERT INTO Tipo_tarjeta(Tipo) 
+    VALUES
+        ('CREDITO'),
+        ('DEBITO')
+;
 
 -- DROP TABLE direcciones;
 CREATE TABLE direcciones(
@@ -63,8 +68,6 @@ CREATE TABLE direcciones(
 
 
 -- Modificacion tabla de cuenta para identificar tipo
--- no se puede asignar una foreign key sqlite mediante alter table
--- solo se puede atraves de pasaje de datos de una tabla a otra
 BEGIN TRANSACTION;
 DROP TABLE IF EXISTS new_cuenta;
 CREATE TABLE new_cuenta(
@@ -78,19 +81,21 @@ CREATE TABLE new_cuenta(
 );
 
 ALTER TABLE cuenta ADD tipo_id integer;
+INSERT INTO new_cuenta SELECT * FROM cuenta;
 
-INSERT INTO new_cuenta 
-    SELECT *
-    FROM cuenta;
 DROP TABLE IF EXISTS cuenta;
 ALTER TABLE new_cuenta RENAME TO cuenta;
+
 COMMIT;
 
 -- Añadir aleatoriamente un tipo de cuenta a cada registro en cuenta
 --    Insertamos los valores que no teniamos
-INSERT INTO Tipos_Cuenta (TCU_tipo) VALUES('Caja de ahorro en pesos');
-INSERT INTO Tipos_Cuenta (TCU_tipo) VALUES('Caja de ahorro en dólares');
-INSERT INTO Tipos_Cuenta (TCU_tipo) VALUES('Cuenta Corriente');
+INSERT INTO Tipos_Cuenta (TCU_tipo) 
+    VALUES
+        ('Caja de ahorro en pesos'),
+        ('Caja de ahorro en dólares'),
+        ('Cuenta Corriente')
+;
 
 
 UPDATE cuenta SET tipo_id = (
@@ -102,5 +107,8 @@ UPDATE cuenta SET tipo_id = (
 
 -- cambiar formato employee_hire_date tabla empleado
 UPDATE empleado set employee_hire_date =(
-select substr(employee_hire_date,7, 4) ||'/'|| substr(employee_hire_date,4, 2) ||'/'|| substr(employee_hire_date,1, 2)
+select 
+    substr(employee_hire_date,7, 4) ||'/'|| 
+    substr(employee_hire_date,4, 2) ||'/'|| 
+    substr(employee_hire_date,1, 2)
 );
