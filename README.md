@@ -1,4 +1,4 @@
-# Sprint5
+# Sprint6
 # Grupo 2
 ## INTEGRANTES
 - Pedraza Suray
